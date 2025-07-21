@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  username      String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  bids          Bid[]    @relation("BidCreator")
+  memes         Meme[]   @relation("MemeCreator")
+  currentBidsOn Meme[]   @relation("CurrentBidder")
+
+  @@map("users")
+}
+
+model Meme {
+  id              String    @id @default(uuid())
+  title           String    @db.VarChar(255)
+  imageUrl        String
+  tags            String[]
+  startingPrice   BigInt    @default(0)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  auctionEndsAt   DateTime?
+  currentPrice    BigInt?
+  currentBidderId String?
+  isActive        Boolean   @default(true)
+  isSold          Boolean  @default(false)
+  bidCount        Int       @default(0)
+  likeCount       Int       @default(0)
+  creatorId       String
+  bids            Bid[]     @relation("MemeBids")
+  creator         User      @relation("MemeCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  currentBidder   User?     @relation("CurrentBidder", fields: [currentBidderId], references: [id])
+
+  @@map("memes")
+}
+
+model Bid {
+  id        String   @id @default(uuid())
+  amount    BigInt
+  createdAt DateTime @default(now())
+  bidderId  String
+  memeId    String
+  bidder    User     @relation("BidCreator", fields: [bidderId], references: [id], onDelete: Cascade)
+  meme      Meme     @relation("MemeBids", fields: [memeId], references: [id], onDelete: Cascade)
+  @@map("bids")
+}
