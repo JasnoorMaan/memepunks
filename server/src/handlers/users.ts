@@ -36,19 +36,34 @@ export const signIn=async(req: Request, res: Response)=>{
 export const postMeme = async(req: Request, res: Response)=>{
     try{
         const id= (req as any).user.id;
+        
+        // Validate required fields
+        if (!req.body.title) {
+            return res.status(400).json({error: "Title is required"});
+        }
+
+        if (!req.body.startingPrice || req.body.startingPrice <= 0) {
+            return res.status(400).json({error: "Valid starting price is required"});
+        }
+        
+        // Convert comma-separated tags string to array
+        const tagsArray = req.body.tags 
+            ? req.body.tags.split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag.length > 0)
+            : [];
+        
         const meme = await prisma.meme.create({
             data:{
-                title:req.body.title,
-                imageUrl:req.body.imageUrl,
-                tags:req.body.tags,
-                startingPrice:req.body.startingPrice,
-                creatorId:id,
+                title: req.body.title,
+                imageUrl: req.body.imageUrl,
+                tags: tagsArray,
+                startingPrice: BigInt(req.body.startingPrice),
+                creatorId: id,
             }
         });
-        res.json({meme});
+        res.json({ success: true, meme });
         }
-    catch(err){
-        res.status(400).json({error:err.message});
+    catch(err: any){
+        console.error('Error creating meme:', err);
+        res.status(400).json({error: err.message || 'Failed to create meme'});
     }
-        
 }

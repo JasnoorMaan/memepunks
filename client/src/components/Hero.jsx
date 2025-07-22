@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import SplineScene from "./Spline";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 
 const textSequence = [
   "AI-POWERED MEMES",
@@ -11,7 +11,7 @@ const textSequence = [
   "NEON MARKETPLACE",
 ];
 
-const Hero = ({ onNavigate }) => {
+const Hero = () => {
   const [currentText, setCurrentText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -47,7 +47,6 @@ const Hero = ({ onNavigate }) => {
 
   return (
     <>
-      {/* <Navbar currentPage="home" onNavigate={onNavigate} /> */}
       <section className="relative h-screen w-full overflow-hidden">
         <SplineScene />
 
@@ -92,7 +91,7 @@ const Hero = ({ onNavigate }) => {
                 CREATE MEME
               </button>
             </Link>
-            <Link to="marketplace">
+            <Link to="market">
               <button className="px-6 py-3 border-2 border-cyberyellow text-cyberyellow hover:bg-cyberyellow hover:text-black transition-all duration-300 orbitron font-bold uppercase tracking-wider">
                 VIEW MARKETPLACE
               </button>
