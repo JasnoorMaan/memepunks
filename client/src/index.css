@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -567,4 +568,128 @@
 
 .animate-scroll {
   animation: scroll 20s linear infinite;
+}
+
+/* Sheet Component Animations */
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out-to-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slide-out-to-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-out-to-top {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes slide-out-to-bottom {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* Apply animations */
+.data-\[state\=open\]\:slide-in-from-right[data-state="open"] {
+  animation: slide-in-from-right 0.5s ease-out;
+}
+
+.data-\[state\=closed\]\:slide-out-to-right[data-state="closed"] {
+  animation: slide-out-to-right 0.3s ease-in;
+}
+
+.data-\[state\=open\]\:slide-in-from-left[data-state="open"] {
+  animation: slide-in-from-left 0.5s ease-out;
+}
+
+.data-\[state\=closed\]\:slide-out-to-left[data-state="closed"] {
+  animation: slide-out-to-left 0.3s ease-in;
+}
+
+.data-\[state\=open\]\:slide-in-from-top[data-state="open"] {
+  animation: slide-in-from-top 0.5s ease-out;
+}
+
+.data-\[state\=closed\]\:slide-out-to-top[data-state="closed"] {
+  animation: slide-out-to-top 0.3s ease-in;
+}
+
+.data-\[state\=open\]\:slide-in-from-bottom[data-state="open"] {
+  animation: slide-in-from-bottom 0.5s ease-out;
+}
+
+.data-\[state\=closed\]\:slide-out-to-bottom[data-state="closed"] {
+  animation: slide-out-to-bottom 0.3s ease-in;
+}
+
+/* Mobile menu hamburger icon animation */
+.hamburger-line {
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger-active .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger-active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-active .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
 }

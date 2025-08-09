@@ -51,9 +51,9 @@ const Hero = () => {
         <SplineScene />
 
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/40 z-10"></div>
-
+        {/* Ticker */}
         <div className="absolute inset-0 z-20 p-8">
-          <div className="absolute bottom-32 left-8">
+          <div className="absolute top-40 md:bottom-32 left-8">
             <div className="cyber-subtitle text-xl md:text-2xl text-white flex items-center mb-4">
               <span className="mr-2 text-cyberyellow">&gt;</span>
               <span className="text-cyberpink">{currentText}</span>
@@ -61,7 +61,8 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="absolute bottom-32 right-8 flex gap-8 text-center">
+          {/* faaltu stats */}
+          <div className="absolute bottom-85 right-16 md:bottom-32 md:right-8 flex gap-8 text-center">
             <div>
               <div className="text-2xl font-bold text-cyberyellow">420+</div>
               <div className="text-xs text-white/80 uppercase tracking-wider">
@@ -81,7 +82,7 @@ const Hero = () => {
               </div>
             </div>
           </div>
-
+          {/* Buttons */}
           <div className="absolute bottom-40 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-6 items-center">
             <Link to="/create">
               <button
