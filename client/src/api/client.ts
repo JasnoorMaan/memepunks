@@ -1,11 +1,14 @@
 import axios from "axios";
 
+const baseURL = (import.meta as any).env.VITE_API_URL || "http://localhost:3000";
+
 const api = axios.create({
-    baseURL:"http://localhost:3000",
-    timeout:5000,
+    baseURL,
+    timeout: 60000,
     headers:{
         'Content-Type':'application/json',
     },
+    withCredentials: true,
 });
 
 api.interceptors.request.use((config)=>{
