@@ -5,6 +5,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "lib": ["ES2020"],
+    "types": ["node"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": false,
