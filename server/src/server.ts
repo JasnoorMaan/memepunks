@@ -41,6 +41,11 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+// health check
+app.get('/', (req, res) => {
+    res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
 app.post('/signup',body('username').isLength({min:3,max:20}).withMessage("Username must be between 3 and 20 characters"),body('email').isEmail().withMessage("Invalid email"),body('password').isLength({min:8,max:20}).withMessage("Password must be between 8 and 20 characters"),createUser);
 app.post('/signin',body('username').isLength({min:3,max:20}).withMessage("Username must be between 3 and 20 characters"),body('password').isLength({min:8,max:20}).withMessage("Password must be between 8 and 20 characters"),signIn);
 router.get("/market", getAllMemes);
