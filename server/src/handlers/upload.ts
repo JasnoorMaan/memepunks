@@ -3,16 +3,25 @@ import { UploadOnCloudinary } from '../services/cloudinary';
 import prisma from '../db';
 import fs from 'fs';
 
-interface MulterRequest extends Request {
-  file?: Express.Multer.File;
-  body: {
-    title?: string;
-    tags?: string | string[];
-    startingPrice?: string;
-  };
+interface UploadedFile {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  size: number;
+  destination: string;
+  filename: string;
+  path: string;
+  buffer?: Buffer;
 }
 
-export const createMemeWithUpload = async (req: MulterRequest, res: Response) => {
+interface UploadRequestBody {
+  title: string;
+  tags?: string | string[];
+  startingPrice: string;
+}
+
+export const createMemeWithUpload = async (req: Request & { file?: UploadedFile; body: UploadRequestBody }, res: Response) => {
   try {
     const { title, tags, startingPrice } = req.body;
     const user = (req as any).user;
