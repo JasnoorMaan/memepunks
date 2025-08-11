@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { memeService, handleAPIerror } from "../api/service";
 import { useAuth } from "../hooks/useAuth";
 import { useLikes } from "../hooks/useLikes";
+// import Lightbox from "yet-another-react-lightbox";
 import BidModal from "./BidModal";
 
 const Card = ({ meme, onMemeUpdate }) => {
@@ -10,6 +11,7 @@ const Card = ({ meme, onMemeUpdate }) => {
   const [loading, setLoading] = useState(false);
   const [isBidModalOpen, setIsBidModalOpen] = useState(false);
   const [error, setError] = useState("");
+  // const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const [localMeme, setLocalMeme] = useState(meme);
 
@@ -94,9 +96,12 @@ const Card = ({ meme, onMemeUpdate }) => {
   return (
     <>
       <section className="bg-cyberblack flex flex-col gap-4 p-4 justify-center items-center w-80 h-auto border border-cyberyellow/30 hover:border-cyberpink/50 transition-colors rounded">
-        <div className="w-full h-auto overflow-hidden">
+        <div
+          className="w-full h-auto overflow-hidden"
+          // onClick={() => setIsLightboxOpen(true)}
+        >
           <img
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain aspect-square"
             src={localMeme.imageUrl || "/dummy.jpg"}
             alt={localMeme.title || "Meme"}
             onError={(e) => {
@@ -173,6 +178,11 @@ const Card = ({ meme, onMemeUpdate }) => {
         meme={localMeme}
         onBidSuccess={handleBidSuccess}
       />
+      {/* <Lightbox
+        open={isLightboxOpen}
+        close={() => setIsLightboxOpen(false)}
+        slides={[{ src: localMeme.imageUrl || "/dummy.jpg" }]}
+      /> */}
     </>
   );
 };

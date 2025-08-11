@@ -39,6 +39,25 @@ export const memeService = {
       const response = await api.post('/api/create', memeData);
       return response.data;
     },
+
+    createMemeWithUpload: async (formData: FormData) => {
+      const response = await api.post('/api/create-with-upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    },
+
+    generateMemeWithAI: async (prompt: string) => {
+      const response = await api.post('/api/generate-meme', { prompt });
+      return response.data;
+    },
+
+    createMemeFromAI: async (memeData: {title: string, tags: string[], imageUrl: string, startingPrice: number}) => {
+      const response = await api.post('/api/create-ai-meme', memeData);
+      return response.data;
+    },
   
     likeMeme: async (memeId: string) => {
       const response = await api.post('/api/like', { memeId });

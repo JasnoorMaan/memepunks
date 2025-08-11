@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
 import router from "./routes";
 import morgan from "morgan";
 import {checkForAuth} from "./modules/middleware";
@@ -40,6 +41,9 @@ app.use(cors(corsOptions));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+// Serve temporary AI-generated images
+app.use('/temp-images', express.static(path.join(__dirname, '../temp')));
 
 // health check
 app.get('/', (req, res) => {

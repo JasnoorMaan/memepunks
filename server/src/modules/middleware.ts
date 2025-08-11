@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import multer from "multer";
 import { Request, Response, NextFunction } from 'express';
 
 export const checkForAuth=(req: Request, res: Response, next: NextFunction)=>{
@@ -25,3 +26,13 @@ export const checkForAuth=(req: Request, res: Response, next: NextFunction)=>{
         return;
     }
 }
+
+const storage = multer.diskStorage({
+    destination: function(req,file,cb){
+        cb(null, "./public/temp")
+    },
+    filename: function(req,file,cb){
+        cb(null, file.originalname)
+    }
+})
+export const upload = multer({storage})
