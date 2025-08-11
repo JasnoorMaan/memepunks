@@ -38,7 +38,6 @@ export const createMemeWithUpload = async (req: Request & { file?: UploadedFile;
       });
     }
 
-    // Upload image to Cloudinary
     const cloudinaryResponse = await UploadOnCloudinary(req.file.path);
     
     if (!cloudinaryResponse) {
@@ -47,12 +46,10 @@ export const createMemeWithUpload = async (req: Request & { file?: UploadedFile;
       });
     }
 
-    // Clean up local file
     if (fs.existsSync(req.file.path)) {
       fs.unlinkSync(req.file.path);
     }
 
-    // Process tags - handle both string and array formats
     let processedTags: string[] = [];
     if (tags) {
       if (typeof tags === 'string') {
@@ -62,7 +59,6 @@ export const createMemeWithUpload = async (req: Request & { file?: UploadedFile;
       }
     }
 
-    // Create meme in database
     const meme = await prisma.meme.create({
       data: {
         title: title,
@@ -84,7 +80,6 @@ export const createMemeWithUpload = async (req: Request & { file?: UploadedFile;
   } catch (error) {
     console.error('Create meme with upload error:', error);
     
-    // Clean up file if it exists
     if (req.file && fs.existsSync(req.file.path)) {
       fs.unlinkSync(req.file.path);
     }
