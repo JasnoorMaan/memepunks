@@ -4,7 +4,12 @@ import prisma from '../db';
 import fs from 'fs';
 
 interface MulterRequest extends Request {
-  file?: any;
+  file?: Express.Multer.File;
+  body: {
+    title?: string;
+    tags?: string | string[];
+    startingPrice?: string;
+  };
 }
 
 export const createMemeWithUpload = async (req: MulterRequest, res: Response) => {
@@ -38,12 +43,22 @@ export const createMemeWithUpload = async (req: MulterRequest, res: Response) =>
       fs.unlinkSync(req.file.path);
     }
 
+    // Process tags - handle both string and array formats
+    let processedTags: string[] = [];
+    if (tags) {
+      if (typeof tags === 'string') {
+        processedTags = tags.split(',').map((tag: string) => tag.trim());
+      } else if (Array.isArray(tags)) {
+        processedTags = tags.map((tag: string) => tag.trim());
+      }
+    }
+
     // Create meme in database
     const meme = await prisma.meme.create({
       data: {
         title: title,
         imageUrl: cloudinaryResponse.secure_url,
-        tags: tags ? tags.split(',').map((tag: string) => tag.trim()) : [],
+        tags: processedTags,
         startingPrice: BigInt(parseFloat(startingPrice)),
         creatorId: user.id,
       },
