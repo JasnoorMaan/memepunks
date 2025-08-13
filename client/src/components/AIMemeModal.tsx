@@ -19,6 +19,7 @@ interface AIMemeModalProps {
     startingPrice: number;
   }) => void;
   isRegenerating: boolean;
+  isCreating?: boolean;
 }
 
 const AIMemeModal: React.FC<AIMemeModalProps> = ({
@@ -28,9 +29,9 @@ const AIMemeModal: React.FC<AIMemeModalProps> = ({
   onRegenerate,
   onCreate,
   isRegenerating,
+  isCreating = false,
 }) => {
   const [startingPrice, setStartingPrice] = React.useState(10);
-
   if (!isOpen || !result) return null;
 
   const handleCreate = () => {
@@ -53,7 +54,10 @@ const AIMemeModal: React.FC<AIMemeModalProps> = ({
             </h2>
             <button
               onClick={onClose}
-              className="text-cyberpink hover:text-cyberyellow text-2xl font-bold"
+              disabled={isCreating}
+              className={`text-cyberpink hover:text-cyberyellow text-2xl font-bold ${
+                isCreating ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               ×
             </button>
@@ -123,24 +127,36 @@ const AIMemeModal: React.FC<AIMemeModalProps> = ({
           <div className="flex gap-4">
             <button
               onClick={onRegenerate}
-              disabled={isRegenerating}
-              className="flex-1 py-3 bg-cyberpink text-black font-bold orbitron rounded hover:opacity-80 transition-opacity disabled:opacity-50"
+              disabled={isRegenerating || isCreating}
+              className={`flex-1 py-3 bg-cyberpink text-black font-bold orbitron rounded hover:opacity-80 transition-opacity ${
+                isRegenerating || isCreating
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
             >
               {isRegenerating ? "REGENERATING..." : "REGENERATE"}
             </button>
 
             <button
               onClick={handleCreate}
-              className="flex-1 py-3 bg-gradient-to-r from-cyberpink to-cyberyellow text-black font-bold orbitron rounded hover:opacity-80 transition-opacity"
+              disabled={isCreating || isRegenerating}
+              className={`flex-1 py-3 bg-gradient-to-r from-cyberpink to-cyberyellow text-black font-bold orbitron rounded hover:opacity-80 transition-opacity ${
+                isCreating || isRegenerating
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
             >
-              CREATE MEME
+              {isCreating ? "CREATING..." : "CREATE MEME"}
             </button>
           </div>
 
           <div className="mt-4 text-center">
             <button
               onClick={onClose}
-              className="text-cyberpink hover:text-cyberyellow underline orbitron text-sm"
+              disabled={isCreating}
+              className={`text-cyberpink hover:text-cyberyellow underline orbitron text-sm ${
+                isCreating ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               Cancel
             </button>

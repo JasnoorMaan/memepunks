@@ -314,6 +314,7 @@ const Create = () => {
         onRegenerate={handleRegenerate}
         onCreate={handleCreateFromAI}
         isRegenerating={isRegenerating}
+        isCreating={loading}
       />
     </>
   );

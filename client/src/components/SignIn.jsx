@@ -35,6 +35,11 @@ const SignIn = () => {
           <h1 className="orbitron text-cyberyellow text-4xl mb-4 text-glitch">
             ENTER THE MATRIX
           </h1>
+          <p className="text-sm md:text-md rounded-lg bg-red-500/10 text-cyberpink p-2 mb-4">
+            MemePunks server is on Render.com. It can take upto a minute to
+            start on the first request due to free plan limitations, so you may
+            have to wait upto a minute till the server starts again.
+          </p>
           {error && (
             <div className="text-cyberpink text-sm sans mb-4 p-2 bg-black/50 border-2 border-cyberpink/30 rounded">
               {error}
