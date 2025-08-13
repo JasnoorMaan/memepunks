@@ -32,7 +32,7 @@ const SignIn = () => {
     <section className="min-h-screen bg-cyberblack flex items-center justify-center p-4">
       <section className="w-full max-w-md space-y-8">
         <div className="text-center">
-          <h1 className="orbitron text-cyberyellow text-4xl mb-4 text-glitch">
+          <h1 className="orbitron text-cyberyellow text-4xl mb-4 mt-24 text-glitch">
             ENTER THE MATRIX
           </h1>
           <p className="text-sm md:text-md rounded-lg bg-red-500/10 text-cyberpink p-2 mb-4">
